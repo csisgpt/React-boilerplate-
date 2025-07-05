@@ -1,12 +1,25 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 
-interface Props { children: ReactNode }
-interface State { hasError: boolean }
+interface ErrorBoundaryProps {
+  children: ReactNode;
+  fallback?: ReactNode;
+  onReset?: () => void;
+}
 
-export class ErrorBoundary extends Component<Props, State> {
-  state: State = { hasError: false };
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
 
-  static getDerivedStateFromError(): State {
+/**
+ * Global React error boundary with reset capability.
+ */
+export class ErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
+  state: ErrorBoundaryState = { hasError: false };
+
+  static getDerivedStateFromError(): ErrorBoundaryState {
     return { hasError: true };
   }
 
@@ -14,9 +27,20 @@ export class ErrorBoundary extends Component<Props, State> {
     console.error('Uncaught error:', error, info);
   }
 
+  private handleReset = () => {
+    this.setState({ hasError: false });
+    this.props.onReset?.();
+  };
+
   render() {
     if (this.state.hasError) {
-      return <h1>Something went wrong.</h1>;
+      if (this.props.fallback) return <>{this.props.fallback}</>;
+      return (
+        <div className="p-4 border rounded text-center">
+          <p>Something went wrong.</p>
+          <button onClick={this.handleReset}>Retry</button>
+        </div>
+      );
     }
 
     return this.props.children;
