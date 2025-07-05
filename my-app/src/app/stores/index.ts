@@ -17,3 +17,4 @@ export * from './useLoadingStore';
 export * from './useChatStore';
 export * from './hooks';
 export * from './testUtils';
+export { useAppStore } from './useAppStore';
