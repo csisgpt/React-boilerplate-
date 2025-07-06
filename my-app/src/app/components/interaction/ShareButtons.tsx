@@ -1,14 +1,24 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
-export interface ShareButtonsProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
+export interface ShareButtonsProps {
+  url: string;
   className?: string;
 }
 
-/** ShareButtons component */
-export const ShareButtons: React.FC<ShareButtonsProps> = ({ className = '', children, ...rest }) => {
+export const ShareButtons: React.FC<ShareButtonsProps> = ({ url, className = '' }) => {
+  const share = (network: string) => {
+    const encoded = encodeURIComponent(url);
+    const href =
+      network === 'twitter'
+        ? `https://twitter.com/intent/tweet?url=${encoded}`
+        : `https://www.facebook.com/sharer/sharer.php?u=${encoded}`;
+    window.open(href, '_blank');
+  };
+
   return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
+    <div className={`flex space-x-2 ${className}`}>
+      <button className="text-blue-600" onClick={() => share('twitter')}>Twitter</button>
+      <button className="text-blue-800" onClick={() => share('facebook')}>Facebook</button>
+    </div>
   );
 };

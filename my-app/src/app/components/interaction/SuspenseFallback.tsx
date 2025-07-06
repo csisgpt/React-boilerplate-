@@ -1,14 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-export interface SuspenseFallbackProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
+export interface SuspenseFallbackProps {
   className?: string;
 }
 
-/** SuspenseFallback component */
-export const SuspenseFallback: React.FC<SuspenseFallbackProps> = ({ className = '', children, ...rest }) => {
-  return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
-  );
-};
+export const SuspenseFallback: React.FC<SuspenseFallbackProps> = ({ className = '' }) => (
+  <motion.div className={`animate-pulse p-4 ${className}`}>Loading...</motion.div>
+);

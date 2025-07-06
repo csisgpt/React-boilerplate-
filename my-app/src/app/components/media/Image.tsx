@@ -1,14 +1,9 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
-export interface ImageProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
+export interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   className?: string;
 }
 
-/** Image component */
-export const Image: React.FC<ImageProps> = ({ className = '', children, ...rest }) => {
-  return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
-  );
-};
+export const Image: React.FC<ImageProps> = ({ className = '', ...rest }) => (
+  <img className={`max-w-full ${className}`} {...rest} />
+);

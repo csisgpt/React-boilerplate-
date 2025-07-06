@@ -1,14 +1,11 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
-export interface FeatureToggleProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
-  className?: string;
+export interface FeatureToggleProps {
+  enabled: boolean;
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
 }
 
-/** FeatureToggle component */
-export const FeatureToggle: React.FC<FeatureToggleProps> = ({ className = '', children, ...rest }) => {
-  return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
-  );
-};
+export const FeatureToggle: React.FC<FeatureToggleProps> = ({ enabled, children, fallback = null }) => (
+  <>{enabled ? children : fallback}</>
+);

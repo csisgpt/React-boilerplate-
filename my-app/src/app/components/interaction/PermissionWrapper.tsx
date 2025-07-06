@@ -1,14 +1,11 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
-export interface PermissionWrapperProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
-  className?: string;
+export interface PermissionWrapperProps {
+  allowed: boolean;
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
 }
 
-/** PermissionWrapper component */
-export const PermissionWrapper: React.FC<PermissionWrapperProps> = ({ className = '', children, ...rest }) => {
-  return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
-  );
-};
+export const PermissionWrapper: React.FC<PermissionWrapperProps> = ({ allowed, children, fallback = null }) => (
+  <>{allowed ? children : fallback}</>
+);
