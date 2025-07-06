@@ -2,8 +2,10 @@ import { render } from '@testing-library/react';
 import { ToggleSwitch } from '../ToggleSwitch';
 
 describe('ToggleSwitch', () => {
-  it('renders children', () => {
-    const { getByText } = render(<ToggleSwitch>Child</ToggleSwitch>);
-    expect(getByText('Child')).toBeInTheDocument();
+  it('renders label', () => {
+    const { getByText } = render(
+      <ToggleSwitch name="toggle" label="Label" />,
+    );
+    expect(getByText('Label')).toBeInTheDocument();
   });
 });
