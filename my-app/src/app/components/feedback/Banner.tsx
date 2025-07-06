@@ -1,14 +1,30 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import clsx from 'clsx';
 
-export interface BannerProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
-  className?: string;
+export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
+  type?: 'success' | 'info' | 'warning' | 'error';
+  onClose?: () => void;
 }
 
-/** Banner component */
-export const Banner: React.FC<BannerProps> = ({ className = '', children, ...rest }) => {
+export const Banner: React.FC<BannerProps> = ({
+  type = 'info',
+  className,
+  onClose,
+  children,
+  ...rest
+}) => {
+  const variants: Record<string, string> = {
+    success: 'bg-green-500 text-white',
+    info: 'bg-blue-500 text-white',
+    warning: 'bg-yellow-500 text-white',
+    error: 'bg-red-500 text-white',
+  };
   return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
+    <div className={clsx('flex items-center p-4', variants[type], className)} {...rest}>
+      <div className="flex-1">{children}</div>
+      {onClose && (
+        <button aria-label="Close" onClick={onClose} className="ml-4">✕</button>
+      )}
+    </div>
   );
 };
