@@ -2,8 +2,9 @@ import { render } from '@testing-library/react';
 import { StatsCard } from '../StatsCard';
 
 describe('StatsCard', () => {
-  it('renders children', () => {
-    const { getByText } = render(<StatsCard>Child</StatsCard>);
-    expect(getByText('Child')).toBeInTheDocument();
+  it('displays title and value', () => {
+    const { getByText } = render(<StatsCard title="Users" value={5} />);
+    expect(getByText('Users')).toBeInTheDocument();
+    expect(getByText('5')).toBeInTheDocument();
   });
 });
