@@ -11,3 +11,6 @@ export * from './ThemeProviderWrapper';
 export * from './Responsive';
 export * from './ErrorBoundary';
 export * from './Transition';
+
+export * from './global';
+
