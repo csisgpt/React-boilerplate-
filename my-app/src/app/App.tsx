@@ -1,11 +1,14 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { GlobalProviders } from '@/app/components/ui/global/GlobalProviders';
+import { AppRoutes } from './routes';
 
-function App() {
-  return (
-    <div className="p-6 text-center">
-      <h1 className="text-2xl font-bold">Hello Vite + React!</h1>
-    </div>
-  );
-}
+const App: React.FC = () => (
+  <BrowserRouter>
+    <GlobalProviders>
+      <AppRoutes />
+    </GlobalProviders>
+  </BrowserRouter>
+);
 
 export default App;

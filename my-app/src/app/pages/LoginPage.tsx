@@ -1,29 +1,32 @@
-import React from 'react';
-import { PageTemplate } from '@/app/components/layout';
-import { FormProvider, Input } from '@/app/forms/components';
-import { useFormWithSchema, useServerValidation } from '@/app/forms/hooks';
-import { LoginFormSchema, LoginFormData } from '@/app/forms/schemas';
+import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { PageTemplate } from '@/app/layouts';
+import { LoginForm } from '@/app/components/ui/forms/LoginForm';
+import { Button } from '@/app/components/ui/Button';
 
-export function LoginPage() {
-  const form = useFormWithSchema<LoginFormData>(LoginFormSchema);
+export const LoginPage: React.FC = () => {
+  const [loading, setLoading] = useState(false);
 
-  const onSubmit = (data: LoginFormData) => {
-    console.log('login', data);
+  const handleSubmit = () => {
+    setLoading(true);
+    setTimeout(() => setLoading(false), 1000);
   };
 
-  useServerValidation({}, form.setError);
-
   return (
-    <PageTemplate title="Login">
-      <FormProvider form={form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <Input name="email" label="Email" type="email" />
-          <Input name="password" label="Password" type="password" />
-          <button type="submit" className="btn btn-primary">
-            Login
-          </button>
-        </form>
-      </FormProvider>
+    <PageTemplate title="Login" breadcrumbItems={[{ label: 'Home', to: '/' }, { label: 'Login' }]}>
+      <Helmet>
+        <title>Login – MyApp</title>
+      </Helmet>
+      <LoginForm onSubmit={handleSubmit} />
+      {loading && <p className="mt-2 text-sm">Signing in...</p>}
+      <div className="mt-4 flex justify-between text-sm">
+        <a href="/register" className="text-blue-600 hover:underline">
+          Register
+        </a>
+        <a href="/forgot-password" className="text-blue-600 hover:underline">
+          Forgot password?
+        </a>
+      </div>
     </PageTemplate>
   );
-}
+};
