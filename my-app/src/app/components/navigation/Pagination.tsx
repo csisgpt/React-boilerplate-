@@ -1,14 +1,31 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
-export interface PaginationProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
+export interface PaginationProps {
+  page: number;
+  total: number;
+  onChange: (page: number) => void;
   className?: string;
 }
 
-/** Pagination component */
-export const Pagination: React.FC<PaginationProps> = ({ className = '', children, ...rest }) => {
+/** Simple pagination */
+export const Pagination: React.FC<PaginationProps> = ({ page, total, onChange, className = '' }) => {
+  const pages = Array.from({ length: total }, (_, i) => i + 1);
+
   return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
+    <nav role="navigation" className={className} aria-label="Pagination">
+      <ul className="inline-flex gap-2">
+        {pages.map((p) => (
+          <li key={p}>
+            <button
+              onClick={() => onChange(p)}
+              aria-current={page === p ? 'page' : undefined}
+              className={`px-3 py-1 rounded ${page === p ? 'bg-blue-600 text-white' : 'bg-gray-100'}`}
+            >
+              {p}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 };

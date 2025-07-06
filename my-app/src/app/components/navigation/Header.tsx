@@ -1,14 +1,15 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
-export interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
+export interface HeaderProps {
+  children: React.ReactNode;
   className?: string;
 }
 
-/** Header component */
-export const Header: React.FC<HeaderProps> = ({ className = '', children, ...rest }) => {
+/** Page header */
+export const Header: React.FC<HeaderProps> = ({ children, className = '' }) => {
   return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
+    <header role="banner" className={`bg-white shadow ${className}`}> 
+      <div className="container mx-auto px-4 py-4">{children}</div>
+    </header>
   );
 };

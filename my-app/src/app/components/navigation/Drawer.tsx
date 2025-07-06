@@ -1,14 +1,35 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
-export interface DrawerProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
+export interface DrawerProps {
+  open: boolean;
+  onClose: () => void;
+  position?: 'left' | 'right';
   className?: string;
+  children: React.ReactNode;
 }
 
-/** Drawer component */
-export const Drawer: React.FC<DrawerProps> = ({ className = '', children, ...rest }) => {
+/**
+ * Sliding drawer panel.
+ */
+export const Drawer: React.FC<DrawerProps> = ({
+  open,
+  onClose,
+  position = 'left',
+  className = '',
+  children,
+}) => {
   return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
+    <div
+      className={`${open ? 'block' : 'hidden'} fixed inset-0 z-40`}
+      role="dialog"
+      aria-modal="true"
+    >
+      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+      <div
+        className={`absolute top-0 ${position === 'left' ? 'left-0' : 'right-0'} h-full w-64 bg-white shadow-xl ${className}`}
+      >
+        {children}
+      </div>
+    </div>
   );
 };

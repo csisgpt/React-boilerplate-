@@ -1,9 +1,14 @@
 import React from 'react';
 
-export function Header() {
+export interface HeaderProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export function Header({ children, className = '' }: HeaderProps) {
   return (
-    <header className="bg-white shadow-sm">
-      <div className="container mx-auto px-4 py-4">Header</div>
+    <header role="banner" className={`bg-white shadow-sm ${className}`}> 
+      <div className="container mx-auto px-4 py-4">{children}</div>
     </header>
   );
 }

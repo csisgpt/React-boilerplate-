@@ -1,14 +1,15 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
-export interface FooterProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
+export interface FooterProps {
+  children: React.ReactNode;
   className?: string;
 }
 
-/** Footer component */
-export const Footer: React.FC<FooterProps> = ({ className = '', children, ...rest }) => {
+/** Global footer */
+export const Footer: React.FC<FooterProps> = ({ children, className = '' }) => {
   return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
+    <footer role="contentinfo" className={`bg-gray-100 py-4 ${className}`}> 
+      <div className="container mx-auto px-4 text-center text-sm text-gray-600">{children}</div>
+    </footer>
   );
 };
