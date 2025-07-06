@@ -3,7 +3,7 @@ import { Rating } from '../components/inputs/Rating';
 
 describe('Rating', () => {
   it('changes highlight on hover', () => {
-    const { getAllByRole } = render(<Rating />);
+    const { getAllByRole } = render(<Rating onChange={() => {}} />);
     const stars = getAllByRole('radio');
     fireEvent.mouseEnter(stars[2]);
     expect(stars[2].querySelector('svg')?.getAttribute('fill')).toBe('currentColor');

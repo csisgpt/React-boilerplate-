@@ -5,7 +5,7 @@ describe('Autocomplete', () => {
   it('fetches suggestions as user types', async () => {
     const fetcher = jest.fn(async () => ['one']);
     const { getByRole } = render(
-      <Autocomplete optionsFetcher={fetcher} debounce={0} />,
+      <Autocomplete optionsFetcher={fetcher} debounce={0} onChange={() => {}} />,
     );
     fireEvent.change(getByRole('combobox'), { target: { value: 'o' } });
     await waitFor(() => expect(fetcher).toHaveBeenCalledWith('o'));
@@ -14,7 +14,7 @@ describe('Autocomplete', () => {
   it('allows keyboard navigation and selection', async () => {
     const fetcher = jest.fn(async () => ['a', 'b']);
     const { getByRole, getByText } = render(
-      <Autocomplete optionsFetcher={fetcher} debounce={0} minChars={0} />,
+      <Autocomplete optionsFetcher={fetcher} debounce={0} minChars={0} onChange={() => {}} />,
     );
     const input = getByRole('combobox') as HTMLInputElement;
     fireEvent.change(input, { target: { value: '' } });
@@ -28,7 +28,7 @@ describe('Autocomplete', () => {
   it('selects option on click', async () => {
     const fetcher = jest.fn(async () => ['foo', 'bar']);
     const { getByRole, getByText } = render(
-      <Autocomplete optionsFetcher={fetcher} debounce={0} minChars={0} />,
+      <Autocomplete optionsFetcher={fetcher} debounce={0} minChars={0} onChange={() => {}} />,
     );
     const input = getByRole('combobox') as HTMLInputElement;
     fireEvent.change(input, { target: { value: '' } });

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Autocomplete, AutocompleteProps } from '../components/inputs/Autocomplete';
+import Autocomplete, { Props as AutocompleteProps } from '../components/inputs/Autocomplete';
 
 const meta: Meta<AutocompleteProps> = {
   title: 'library/Inputs/Autocomplete',
@@ -12,10 +12,11 @@ const meta: Meta<AutocompleteProps> = {
     className: { control: 'text' },
   },
   args: {
-    optionsFetcher: async (q: string) => ['apple', 'banana', 'orange'].filter((o) => o.includes(q)),
+    optionsFetcher: async (q: string) => ['apple', 'banana', 'orange'].filter(o => o.includes(q)),
     debounce: 300,
     minChars: 1,
     value: '',
+    onChange: () => {},
   },
 };
 export default meta;

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { MaskedInput, MaskedInputProps } from '../components/inputs/MaskedInput';
+import MaskedInput, { Props as MaskedInputProps } from '../components/inputs/MaskedInput';
 
 const meta: Meta<MaskedInputProps> = {
   title: 'library/Inputs/MaskedInput',
@@ -15,6 +15,7 @@ const meta: Meta<MaskedInputProps> = {
     maskPattern: '###-###',
     maskChar: '_',
     defaultValue: '',
+    onChange: () => {},
   },
 };
 export default meta;

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Rating, RatingProps } from '../components/inputs/Rating';
+import Rating, { Props as RatingProps } from '../components/inputs/Rating';
 
 const meta: Meta<RatingProps> = {
   title: 'library/Inputs/Rating',
@@ -9,14 +9,15 @@ const meta: Meta<RatingProps> = {
     value: { control: 'number' },
     defaultValue: { control: 'number' },
     readOnly: { control: 'boolean' },
-    size: { control: 'number' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
     className: { control: 'text' },
   },
   args: {
     max: 5,
     defaultValue: 3,
     readOnly: false,
-    size: 24,
+    size: 'md',
+    onChange: () => {},
   },
 };
 export default meta;
