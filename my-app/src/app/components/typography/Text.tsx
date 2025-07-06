@@ -1,14 +1,45 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import clsx from 'clsx';
 
 export interface TextProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
+  as?: keyof JSX.IntrinsicElements;
+  size?: 'sm' | 'md' | 'lg';
+  weight?: 'normal' | 'semibold' | 'bold';
+  truncate?: boolean;
   className?: string;
 }
 
-/** Text component */
-export const Text: React.FC<TextProps> = ({ className = '', children, ...rest }) => {
-  return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
-  );
+const sizeMap: Record<'sm' | 'md' | 'lg', string> = {
+  sm: 'text-sm',
+  md: 'text-base',
+  lg: 'text-lg',
 };
+
+const weightMap: Record<'normal' | 'semibold' | 'bold', string> = {
+  normal: 'font-normal',
+  semibold: 'font-semibold',
+  bold: 'font-bold',
+};
+
+export const Text = React.forwardRef<HTMLElement, TextProps>(function Text(
+  {
+    as: Component = 'p',
+    size = 'md',
+    weight = 'normal',
+    truncate,
+    className,
+    children,
+    ...rest
+  },
+  ref
+) {
+  return (
+    <Component
+      ref={ref as any}
+      className={clsx(sizeMap[size], weightMap[weight], { truncate }, className)}
+      {...rest}
+    >
+      {children}
+    </Component>
+  );
+});
