@@ -1,10 +1,26 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Box } from './Box';
+import { Box, BoxProps } from './Box';
 
-const meta: Meta<typeof Box> = {
+const meta: Meta<BoxProps> = {
   title: 'primitives/Box',
   component: Box,
-  args: { children: 'Box' },
+  argTypes: {
+    as: { control: 'text' },
+    w: { control: 'object' },
+    h: { control: 'object' },
+    p: { control: 'object' },
+    m: { control: 'object' },
+    gap: { control: 'object' },
+    bg: { control: 'text' },
+    textColor: { control: 'text' },
+    className: { control: 'text' },
+  },
+  args: { children: 'Box', p: '4', bg: 'gray-100' },
 };
 export default meta;
-export const Default: StoryObj<typeof Box> = {};
+
+type Story = StoryObj<BoxProps>;
+
+export const Default: Story = {};
+export const AsArticle: Story = { args: { as: 'article' } };
+export const CustomClass: Story = { args: { className: 'border' } };

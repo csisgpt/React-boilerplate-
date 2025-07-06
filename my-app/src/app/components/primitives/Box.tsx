@@ -1,14 +1,52 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import clsx from 'clsx';
+import { ResponsiveProp, buildClasses } from './utils';
 
 export interface BoxProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
+  as?: React.ElementType;
+  w?: ResponsiveProp;
+  h?: ResponsiveProp;
+  p?: ResponsiveProp;
+  m?: ResponsiveProp;
+  gap?: ResponsiveProp;
+  bg?: ResponsiveProp;
+  textColor?: ResponsiveProp;
   className?: string;
 }
 
-/** Box component */
-export const Box: React.FC<BoxProps> = ({ className = '', children, ...rest }) => {
-  return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
+export const Box = React.forwardRef<HTMLElement, BoxProps>(function Box(
+  {
+    as: Component = 'div',
+    w,
+    h,
+    p,
+    m,
+    gap,
+    bg,
+    textColor,
+    className,
+    children,
+    role,
+    ...rest
+  },
+  ref,
+) {
+  const classes = clsx(
+    buildClasses(w, 'w-'),
+    buildClasses(h, 'h-'),
+    buildClasses(p, 'p-'),
+    buildClasses(m, 'm-'),
+    buildClasses(gap, 'gap-'),
+    buildClasses(bg, 'bg-'),
+    buildClasses(textColor, 'text-'),
+    className,
   );
-};
+  const MotionComponent: any = motion(Component as any);
+  const resolvedRole = role ?? (Component === 'div' ? 'presentation' : undefined);
+  return (
+    <MotionComponent ref={ref} className={classes} initial={{ opacity: 0 }} animate={{ opacity: 1 }} role={resolvedRole} {...rest}>
+      {children}
+    </MotionComponent>
+  );
+});

@@ -1,10 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { VirtualScroller } from './VirtualScroller';
+import { VirtualScroller, VirtualScrollerProps } from './VirtualScroller';
 
-const meta: Meta<typeof VirtualScroller> = {
+const items = Array.from({ length: 1000 }, (_, i) => `Item ${i + 1}`);
+
+const meta: Meta<VirtualScrollerProps<string>> = {
   title: 'data-utils/VirtualScroller',
   component: VirtualScroller,
-  args: { children: 'VirtualScroller' },
+  args: {
+    items,
+    itemHeight: 30,
+    height: 200,
+    renderItem: (item: string) => <div className="px-2 border-b">{item}</div>,
+  },
 };
 export default meta;
-export const Default: StoryObj<typeof VirtualScroller> = {};
+
+type Story = StoryObj<VirtualScrollerProps<string>>;
+
+export const Default: Story = {};

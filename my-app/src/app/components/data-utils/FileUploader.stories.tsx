@@ -1,10 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { FileUploader } from './FileUploader';
+import { FileUploader, Props as FileUploaderProps } from './FileUploader';
 
-const meta: Meta<typeof FileUploader> = {
+const meta: Meta<FileUploaderProps> = {
   title: 'data-utils/FileUploader',
   component: FileUploader,
-  args: { children: 'FileUploader' },
+  args: { name: 'files' },
 };
 export default meta;
-export const Default: StoryObj<typeof FileUploader> = {};
+
+type Story = StoryObj<FileUploaderProps>;
+
+export const Default: Story = {};

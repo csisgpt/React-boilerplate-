@@ -2,8 +2,9 @@ import { render } from '@testing-library/react';
 import { Spacer } from '../Spacer';
 
 describe('Spacer', () => {
-  it('renders children', () => {
-    const { getByText } = render(<Spacer>Child</Spacer>);
-    expect(getByText('Child')).toBeInTheDocument();
+  it('renders grow class', () => {
+    const { container } = render(<Spacer data-testid="spacer" />);
+    const el = container.querySelector('div') as HTMLElement;
+    expect(el).toHaveClass('grow');
   });
 });

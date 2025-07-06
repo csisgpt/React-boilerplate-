@@ -1,10 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Stack } from './Stack';
+import { Stack, StackProps } from './Stack';
 
-const meta: Meta<typeof Stack> = {
+const meta: Meta<StackProps> = {
   title: 'primitives/Stack',
   component: Stack,
-  args: { children: 'Stack' },
+  argTypes: {
+    as: { control: 'text' },
+    w: { control: 'object' },
+    h: { control: 'object' },
+    p: { control: 'object' },
+    m: { control: 'object' },
+    gap: { control: 'object' },
+    bg: { control: 'text' },
+    textColor: { control: 'text' },
+    className: { control: 'text' },
+  },
+  args: { children: 'Stack', gap: '2' },
 };
 export default meta;
-export const Default: StoryObj<typeof Stack> = {};
+
+type Story = StoryObj<StackProps>;
+
+export const Default: Story = {};
+export const WithPadding: Story = { args: { p: '2' } };
