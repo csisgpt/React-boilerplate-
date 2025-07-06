@@ -1,14 +1,34 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import clsx from 'clsx';
+import { BoxProps } from './Box';
+import { ResponsiveProp, buildClasses } from './utils';
 
-export interface AspectRatioProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
-  className?: string;
+export interface AspectRatioProps extends BoxProps {
+  ratio?: string;
 }
 
-/** AspectRatio component */
-export const AspectRatio: React.FC<AspectRatioProps> = ({ className = '', children, ...rest }) => {
-  return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
+export const AspectRatio = React.forwardRef<HTMLElement, AspectRatioProps>(function AspectRatio(
+  { as: Component = 'div', ratio = '1/1', className, ...rest },
+  ref,
+) {
+  const MotionComponent: any = motion(Component as any);
+  const { w, h, p, m, gap, bg, textColor, children, role, ...other } = rest as any;
+  const classes = clsx(
+    `aspect-[${ratio}]`,
+    buildClasses(w, 'w-'),
+    buildClasses(h, 'h-'),
+    buildClasses(p, 'p-'),
+    buildClasses(m, 'm-'),
+    buildClasses(gap, 'gap-'),
+    buildClasses(bg, 'bg-'),
+    buildClasses(textColor, 'text-'),
+    className,
   );
-};
+  const resolvedRole = role ?? (Component === 'div' ? 'presentation' : undefined);
+  return (
+    <MotionComponent ref={ref} className={classes} initial={{ opacity: 0 }} animate={{ opacity: 1 }} role={resolvedRole} {...other}>
+      {children}
+    </MotionComponent>
+  );
+});

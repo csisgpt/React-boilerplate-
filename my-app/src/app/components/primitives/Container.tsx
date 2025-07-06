@@ -1,14 +1,32 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import clsx from 'clsx';
+import { BoxProps } from './Box';
+import { buildClasses } from './utils';
 
-export interface ContainerProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
-  className?: string;
-}
+export interface ContainerProps extends BoxProps {}
 
-/** Container component */
-export const Container: React.FC<ContainerProps> = ({ className = '', children, ...rest }) => {
-  return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
+export const Container = React.forwardRef<HTMLElement, ContainerProps>(function Container(
+  { as: Component = 'div', className, ...rest },
+  ref,
+) {
+  const MotionComponent: any = motion(Component as any);
+  const { w, h, p, m, gap, bg, textColor, children, role, ...other } = rest as any;
+  const classes = clsx(
+    'container mx-auto',
+    buildClasses(w, 'w-'),
+    buildClasses(h, 'h-'),
+    buildClasses(p, 'p-'),
+    buildClasses(m, 'm-'),
+    buildClasses(gap, 'gap-'),
+    buildClasses(bg, 'bg-'),
+    buildClasses(textColor, 'text-'),
+    className,
   );
-};
+  const resolvedRole = role ?? (Component === 'div' ? 'presentation' : undefined);
+  return (
+    <MotionComponent ref={ref} className={classes} initial={{ opacity: 0 }} animate={{ opacity: 1 }} role={resolvedRole} {...other}>
+      {children}
+    </MotionComponent>
+  );
+});

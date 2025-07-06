@@ -1,10 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { CsvImportExport } from './CsvImportExport';
+import { CsvImportExport, CsvImportExportProps } from './CsvImportExport';
 
-const meta: Meta<typeof CsvImportExport> = {
+const meta: Meta<CsvImportExportProps<any>> = {
   title: 'data-utils/CsvImportExport',
   component: CsvImportExport,
-  args: { children: 'CsvImportExport' },
+  args: {
+    data: [],
+    onData: () => {},
+  },
 };
 export default meta;
-export const Default: StoryObj<typeof CsvImportExport> = {};
+
+type Story = StoryObj<CsvImportExportProps<any>>;
+
+export const Default: Story = {};
