@@ -2,8 +2,10 @@ import { render } from '@testing-library/react';
 import { Autocomplete } from '../Autocomplete';
 
 describe('Autocomplete', () => {
-  it('renders children', () => {
-    const { getByText } = render(<Autocomplete>Child</Autocomplete>);
-    expect(getByText('Child')).toBeInTheDocument();
+  it('renders label', () => {
+    const { getByText } = render(
+      <Autocomplete name="auto" label="Label" options={[{ label: 'A', value: 'a' }]} />,
+    );
+    expect(getByText('Label')).toBeInTheDocument();
   });
 });
