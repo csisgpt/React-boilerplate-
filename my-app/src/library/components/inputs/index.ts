@@ -1,4 +1,6 @@
 
+export * from './FileUploader';
+
 export * from './RichTextEditor';
 export * from './Autocomplete';
 export * from './MaskedInput';
