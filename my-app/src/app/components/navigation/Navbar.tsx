@@ -1,14 +1,30 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
-export interface NavbarProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
+interface NavItem {
+  label: string;
+  href?: string;
+}
+
+export interface NavbarProps {
+  items: NavItem[];
   className?: string;
 }
 
-/** Navbar component */
-export const Navbar: React.FC<NavbarProps> = ({ className = '', children, ...rest }) => {
+/** Top navigation bar */
+export const Navbar: React.FC<NavbarProps> = ({ items, className = '' }) => {
   return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
+    <nav role="navigation" className={`bg-white shadow ${className}`}> 
+      <div className="container mx-auto px-4 flex items-center h-12">
+        <ul className="flex gap-4">
+          {items.map((item, idx) => (
+            <li key={idx}>
+              <a href={item.href} className="hover:underline">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </nav>
   );
 };
