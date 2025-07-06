@@ -1,14 +1,33 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
-export interface TooltipProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
-  className?: string;
+export interface TooltipProps {
+  label: React.ReactNode;
+  children: React.ReactNode;
 }
 
-/** Tooltip component */
-export const Tooltip: React.FC<TooltipProps> = ({ className = '', children, ...rest }) => {
+export const Tooltip: React.FC<TooltipProps> = ({ label, children }) => {
+  const [open, setOpen] = useState(false);
   return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
+    <span
+      className="relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      {children}
+      <AnimatePresence>
+        {open && (
+          <motion.span
+            role="tooltip"
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -5 }}
+            className="absolute left-1/2 top-full z-10 -translate-x-1/2 whitespace-nowrap rounded bg-gray-800 px-2 py-1 text-sm text-white"
+          >
+            {label}
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </span>
   );
 };

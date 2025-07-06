@@ -1,14 +1,33 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { Dialog, DialogProps } from './Dialog';
+import { Button } from '@app/components/ui/Button';
 
-export interface ConfirmationDialogProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
-  className?: string;
+export interface ConfirmationDialogProps extends DialogProps {
+  onConfirm: () => void;
+  confirmText?: string;
+  cancelText?: string;
 }
 
-/** ConfirmationDialog component */
-export const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ className = '', children, ...rest }) => {
+export const ConfirmationDialog: React.FC<React.PropsWithChildren<ConfirmationDialogProps>> = ({
+  onConfirm,
+  confirmText = 'Confirm',
+  cancelText = 'Cancel',
+  footer,
+  ...rest
+}) => {
   return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
+    <Dialog
+      {...rest}
+      footer={
+        footer ?? (
+          <div className="flex justify-end gap-2">
+            <Button onClick={onConfirm}>{confirmText}</Button>
+            <Button variant="secondary" onClick={rest.onClose}>
+              {cancelText}
+            </Button>
+          </div>
+        )
+      }
+    />
   );
 };
