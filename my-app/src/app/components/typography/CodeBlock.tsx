@@ -1,14 +1,16 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import clsx from 'clsx';
 
-export interface CodeBlockProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
+export interface CodeBlockProps {
+  language?: string;
+  children: string;
   className?: string;
 }
 
-/** CodeBlock component */
-export const CodeBlock: React.FC<CodeBlockProps> = ({ className = '', children, ...rest }) => {
+export const CodeBlock: React.FC<CodeBlockProps> = ({ language, children, className }) => {
   return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
+    <pre className={clsx('overflow-auto rounded bg-gray-800 p-4', className)}>
+      <code className={clsx(language && `language-${language}`, 'text-white')}>{children}</code>
+    </pre>
   );
 };

@@ -1,10 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Paragraph } from './Paragraph';
+import { Paragraph, ParagraphProps } from './Paragraph';
 
-const meta: Meta<typeof Paragraph> = {
+const meta: Meta<ParagraphProps> = {
   title: 'typography/Paragraph',
   component: Paragraph,
-  args: { children: 'Paragraph' },
+  parameters: { docs: { description: { component: "Usage of the component" } } },
+  args: { children: 'Paragraph text' },
+  argTypes: {
+    leading: { control: 'text' },
+  },
 };
 export default meta;
-export const Default: StoryObj<typeof Paragraph> = {};
+export const Default: StoryObj<ParagraphProps> = {};

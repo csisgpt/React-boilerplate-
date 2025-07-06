@@ -1,14 +1,21 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import clsx from 'clsx';
 
-export interface ParagraphProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
+export interface ParagraphProps extends React.HTMLAttributes<HTMLParagraphElement> {
+  leading?: string;
   className?: string;
 }
 
-/** Paragraph component */
-export const Paragraph: React.FC<ParagraphProps> = ({ className = '', children, ...rest }) => {
-  return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
-  );
-};
+export const Paragraph = React.forwardRef<HTMLParagraphElement, ParagraphProps>(
+  function Paragraph({ leading, className, children, ...rest }, ref) {
+    return (
+      <p
+        ref={ref}
+        className={clsx(leading && `leading-${leading}`, className)}
+        {...rest}
+      >
+        {children}
+      </p>
+    );
+  }
+);
