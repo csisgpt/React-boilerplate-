@@ -4,17 +4,17 @@ import { PageTemplate } from '@/app/layouts';
 import { Button } from '@/app/components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 
-export const NotFoundPage: React.FC = () => {
+export const ForbiddenPage: React.FC = () => {
   const navigate = useNavigate();
   return (
-    <PageTemplate title="404" breadcrumbItems={[]}>
+    <PageTemplate title="403" breadcrumbItems={[]}>
       <Helmet>
-        <title>404 – MyApp</title>
+        <title>403 – MyApp</title>
       </Helmet>
       <div className="text-center space-y-4">
-        <img src="https://via.placeholder.com/150" alt="Not found" className="mx-auto" />
-        <p>Page not found.</p>
-        <Button onClick={() => navigate('/')}>Go Home</Button>
+        <img src="https://via.placeholder.com/150" alt="Forbidden" className="mx-auto" />
+        <p>You do not have access to this page.</p>
+        <Button onClick={() => navigate('/')}>Home</Button>
       </div>
     </PageTemplate>
   );

@@ -1,46 +1,40 @@
 import React from 'react';
-import { PageTemplate } from '@/app/components/layout';
-import {
-  FormProvider,
-  Input,
-  Textarea,
-  FileUpload,
-  FieldArray,
-  ConditionalField,
-} from '@/app/forms/components';
-import { useFormWithSchema, useFormAutosave } from '@/app/forms/hooks';
-import { ProfileFormSchema, ProfileFormData } from '@/app/forms/schemas';
+import { useForm } from 'react-hook-form';
+import { Helmet } from 'react-helmet-async';
+import { PageTemplate } from '@/app/layouts';
+import { Input } from '@/app/components/forms';
+import { Button } from '@/app/components/ui/Button';
+import { useNotificationStore } from '@/app/stores/useNotificationStore';
 
-export function ProfilePage() {
-  const form = useFormWithSchema<ProfileFormData>(ProfileFormSchema, {
-    defaultValues: { name: '', bio: '' },
-  });
+interface FormData {
+  name: string;
+  email: string;
+  password?: string;
+}
 
-  useFormAutosave('profile', form.watch());
+const mockUser = { name: 'Jane Doe', email: 'jane@example.com' };
 
-  const onSubmit = (data: ProfileFormData) => {
-    console.log('profile', data);
+export const ProfilePage: React.FC = () => {
+  const { register, handleSubmit } = useForm<FormData>({ defaultValues: mockUser });
+  const enqueue = useNotificationStore((s) => s.enqueue);
+
+  const onSubmit = () => {
+    enqueue({ message: 'Profile saved', type: 'success' });
   };
 
   return (
-    <PageTemplate title="Profile">
-      <FormProvider form={form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <Input name="name" label="Name" />
-          <Textarea name="bio" label="Bio" />
-          <FileUpload name="avatarFile" />
-          <FieldArray
-            name="phones"
-            render={(fieldName, index) => <Input name={`${fieldName}`} label={`Phone ${index + 1}`} />}
-          />
-          <ConditionalField name="bio" when={v => !!v}>
-            <p className="text-sm text-gray-500">Thanks for adding a bio!</p>
-          </ConditionalField>
-          <button type="submit" className="btn btn-primary mt-4">
-            Save
-          </button>
-        </form>
-      </FormProvider>
+    <PageTemplate title="Profile" breadcrumbItems={[{ label: 'Dashboard', to: '/dashboard' }, { label: 'Profile' }]}>
+      <Helmet>
+        <title>Profile – MyApp</title>
+      </Helmet>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input label="Name" {...register('name')} />
+          <Input label="Email" type="email" {...register('email')} />
+          <Input label="Password" type="password" {...register('password')} />
+        </div>
+        <Button type="submit">Save</Button>
+      </form>
     </PageTemplate>
   );
-}
+};
