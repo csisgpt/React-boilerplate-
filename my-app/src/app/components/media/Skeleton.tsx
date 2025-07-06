@@ -1,14 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-export interface SkeletonProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
+export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-/** Skeleton component */
-export const Skeleton: React.FC<SkeletonProps> = ({ className = '', children, ...rest }) => {
-  return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
-  );
-};
+export const Skeleton: React.FC<SkeletonProps> = ({ className = '', ...rest }) => (
+  <motion.div
+    className={`animate-pulse bg-gray-200 dark:bg-gray-700 rounded ${className}`}
+    {...rest}
+  />
+);

@@ -1,14 +1,41 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
 
-export interface LazyImageProps extends React.HTMLAttributes<HTMLElement> {
-  /** Additional class names */
+export interface LazyImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+  placeholder?: React.ReactNode;
   className?: string;
 }
 
-/** LazyImage component */
-export const LazyImage: React.FC<LazyImageProps> = ({ className = '', children, ...rest }) => {
+export const LazyImage: React.FC<LazyImageProps> = ({
+  placeholder,
+  className = '',
+  ...rest
+}) => {
+  const ref = useRef<HTMLImageElement>(null);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const img = ref.current;
+    if (!img) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        img.src = rest.src ?? '';
+        observer.disconnect();
+      }
+    });
+    observer.observe(img);
+    return () => observer.disconnect();
+  }, [rest.src]);
+
   return (
-    <motion.div className={className} {...rest}>{children}</motion.div>
+    <>
+      {!loaded && placeholder}
+      <img
+        ref={ref}
+        onLoad={() => setLoaded(true)}
+        className={`${loaded ? 'block' : 'hidden'} ${className}`}
+        alt={rest.alt}
+        {...rest}
+      />
+    </>
   );
 };
