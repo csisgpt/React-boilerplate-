@@ -1,4 +1,5 @@
 import React from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from '@app/components/theme';
 import { ErrorBoundaryWrapper } from '@app/components/interaction';
 import { FeatureFlagProvider } from './FeatureFlagProvider';
@@ -7,7 +8,7 @@ import { GlobalStyles } from './GlobalStyles';
 import { useAuthStore } from '@app/stores/useAuthStore';
 import { useLocalizationStore } from '@app/stores/useLocalizationStore';
 
-interface AuthContextValue extends ReturnType<typeof useAuthStore> {}
+interface AuthContextValue extends ReturnType<typeof useAuthStore> { }
 const AuthContext = React.createContext<AuthContextValue | undefined>(undefined);
 export const useAuth = () => {
   const ctx = React.useContext(AuthContext);
@@ -46,18 +47,20 @@ export interface Props { children: React.ReactNode }
 
 /** Compose application wide providers */
 export const GlobalProviders: React.FC<Props> = ({ children }) => (
-  <FeatureFlagProvider>
-    <AuthProvider>
-      <I18nProvider>
-        <ThemeProvider>
-          <AnalyticsProvider>
-            <ErrorBoundaryWrapper>
-              <GlobalStyles />
-              {children}
-            </ErrorBoundaryWrapper>
-          </AnalyticsProvider>
-        </ThemeProvider>
-      </I18nProvider>
-    </AuthProvider>
-  </FeatureFlagProvider>
+  <HelmetProvider >
+    <FeatureFlagProvider>
+      <AuthProvider>
+        <I18nProvider>
+          <ThemeProvider>
+            <AnalyticsProvider>
+              <ErrorBoundaryWrapper>
+                <GlobalStyles />
+                {children}
+              </ErrorBoundaryWrapper>
+            </AnalyticsProvider>
+          </ThemeProvider>
+        </I18nProvider>
+      </AuthProvider>
+    </FeatureFlagProvider>
+  </HelmetProvider>
 );

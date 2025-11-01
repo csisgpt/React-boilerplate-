@@ -47,7 +47,7 @@ export const AppRoutes: React.FC = () => (
       <Route path="register" element={<RegisterPage />} />
       <Route path="forgot-password" element={<ForgotPasswordPage />} />
     </Route>
-    <Route element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
+    <Route element={<DashboardLayout />}>
       <Route path="dashboard" element={<DashboardPage />} />
       <Route path="profile" element={<ProfilePage />} />
       <Route path="settings" element={<SettingsPage />} />
