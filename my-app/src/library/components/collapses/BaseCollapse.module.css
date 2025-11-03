@@ -1,0 +1,58 @@
+@import '/theme/tokens/animations.css';
+
+.collapseWrapper {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.collapseHeader {
+  display: flex;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  user-select: none;
+}
+
+.collapseIcon {
+  display: flex;
+  margin-right: var(--space-sm);
+}
+
+.collapseArrow {
+  margin-left: auto;
+  transition: transform var(--transition-base);
+}
+
+.isOpen .collapseArrow {
+  transform: rotate(90deg);
+}
+
+.collapseContent {
+  padding: var(--space-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.isDisabled .collapseHeader {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.collapseEnter,
+.collapseLeave {
+  transition: height var(--transition-base), opacity var(--transition-base);
+  overflow: hidden;
+}
+
+.fadeEnter,
+.fadeLeave {
+  transition: opacity var(--transition-base);
+}
+
+.slideDownEnter,
+.slideDownLeave {
+  transition: height var(--transition-base), transform var(--transition-base), opacity var(--transition-base);
+  overflow: hidden;
+}
