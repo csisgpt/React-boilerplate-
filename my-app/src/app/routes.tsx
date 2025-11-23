@@ -22,6 +22,7 @@ import {
   ForbiddenPage,
   ServerErrorPage,
   SettingsPage,
+  LandingPage
 } from '@/app/pages';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -52,5 +53,6 @@ export const AppRoutes: React.FC = () => (
       <Route path="profile" element={<ProfilePage />} />
       <Route path="settings" element={<SettingsPage />} />
     </Route>
+    <Route path="landing" element={<LandingPage />} />
   </Routes>
 );

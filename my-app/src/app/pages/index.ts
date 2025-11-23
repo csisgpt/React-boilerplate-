@@ -13,3 +13,4 @@ export * from './NotFoundPage';
 export * from './ForbiddenPage';
 export * from './ServerErrorPage';
 export * from './SettingsPage';
+export * from './LandingPage';

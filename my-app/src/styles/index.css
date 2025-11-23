@@ -1,3 +1,328 @@
 @import "tailwindcss";
 
+/* 
+============================================================
+  Global Design System – Tailwind 4.x
+  ساختار رنگ‌ها: base / primary / secondary / neutral / status
+  ✅ هدف:
+    - لایت + دارک مود
+    - ساده، مینیمال، قابل توسعه
+    - قابل اضافه کردن تم‌های جدید بدون دست‌کاری کلاس‌ها
+
+  ✅ استفاده کلّی:
+    - base*      → پس‌زمینه‌ها / بک‌گراندهای اصلی
+    - primary*   → رنگ برند / اکشن‌های اصلی (دکمه‌های مهم، لینک‌های اصلی)
+    - secondary* → رنگ مکمل برند / اکشن‌های ثانویه
+    - neutral*   → بُردرها، خطوط جداکننده، حاشیه‌ها
+    - success/warning/danger → وضعیت‌ها (استیت‌ها)
+
+  ✅ لایت vs دارک:
+    - @theme → مقادیر پیش‌فرض (لایت)
+    - :root.dark → وقتی روی html/body کلاس .dark بگذاری، این مقادیر جایگزین می‌شوند
+
+  ✅ ساخت تم جدید:
+    - کافی است بلاک جدید بسازی مثل:
+        :root[data-theme="ocean"] {
+          --color-base: ...;
+          --color-primary: ...;
+          ...
+        }
+      و روی html/body data-theme="ocean" بگذاری.
+============================================================*/
+
+/* 
+  Dark variant:
+  - Tailwind با این تعریف می‌فهمد هر utility با variant 'dark:' 
+    باید درون selectorهایی که کلاس .dark دارند اعمال شود.
+  - مثال استفاده:
+      <html class="dark">... 
+      <div class="bg-base dark:bg-base-strong">...</div>
+*/
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* ================================================
+   1) TOKENS — BASE + PRIMARY + SECONDARY SYSTEM
+   @theme:
+     - همه‌ی توکن‌ها اینجا تعریف می‌شوند
+     - این بخش حالت پیش‌فرض (Light Theme) است
+   ================================================ */
+@theme {
+
+  /* -------------------------
+     BASE (Surface / Background)
+     - رنگ‌های پس‌زمینه‌ی کلی صفحه و کارت‌ها
+     - استفاده:
+         bg-base        → پس‌زمینه‌ی اصلی صفحه / root
+         bg-base-soft   → پس‌زمینه‌ی بخش‌ها، باکس‌ها
+         bg-base-strong → کارت‌ها / پنل‌ها / headerهای برجسته
+  --------------------------*/
+  --color-base: #F8F3E6;
+  --color-base-soft: #EFE8D7;
+  --color-base-strong: #E4DCC8;
+
+  /* -------------------------
+     TEXT
+     - رنگ‌های متن
+     - استفاده:
+         text-main   → متن اصلی
+         text-muted  → متن توضیحی / ثانویه
+         text-soft   → متن خیلی کم‌رنگ (placeholder, disabled)
+         text-on-primary → متنی که روی primary می‌آید (مثلاً روی دکمه‌ها)
+  --------------------------*/
+
+  --color-text: #344E41;
+  --color-text-muted: #7F8A6C;
+  --color-text-soft: #A3A89A;
+  --color-text-on-primary: #FFFFFF;
+
+  /* -------------------------
+     PRIMARY (Brand Main)
+     - رنگ اصلی برند و اکشن‌ها
+     - استفاده:
+         bg-primary        → دکمه‌ی اصلی، لینک‌های مهم، accentها
+         bg-primary-hover  → حالت hover دکمه‌های اصلی
+         bg-primary-strong → حالت active / فشار داده شده
+  --------------------------*/
+  --color-primary: #A3B18A;
+  --color-primary-hover: #99D98C;
+  --color-primary-strong: #76C893;
+
+  /* -------------------------
+     SECONDARY (Accent دوم / برند کمکی)
+     - رنگ مکمل برند
+     - استفاده:
+         bg-secondary        → دکمه‌های ثانویه، badgeها، accentهای فرعی
+         bg-secondary-hover  → hover دکمه‌های ثانویه
+         bg-secondary-strong → حالت active
+  --------------------------*/
+  --color-secondary: #76C893;
+  --color-secondary-hover: #52B69A;
+  --color-secondary-strong: #168AAD;
+
+  /* -------------------------
+     NEUTRALS / BORDERS
+     - خاکستری‌های سیستم / حاشیه‌ها و خطوط
+     - استفاده:
+         border-neutral        → بُردر عمومی و لطیف
+         border-neutral-strong → بُردر قوی‌تر (جداکننده‌های مهم)
+         color-neutral-border  → بُردر پیش‌فرض کامپوننت‌ها
+  --------------------------*/
+  --color-neutral: #D7CBB5;
+  --color-neutral-strong: #B6A98F;
+  --color-neutral-border: #CFC4AF;
+
+  /* -------------------------
+     STATUS
+     - برای نمایش وضعیت‌ها: موفق، هشدار، خطا
+     - استفاده:
+         bg-success / bg-warning / bg-danger
+         در badgeها، alertها، labelهای وضعیت، chipها
+  --------------------------*/
+  --color-success: #52B69A;
+  --color-warning: #E9C46A;
+  --color-danger: #E76F51;
+
+
+
+}
+
+
+/* ================================================
+   2) DARK THEME OVERRIDES
+   - وقتی html/body کلاس .dark داشته باشد
+   - همان توکن‌ها override می‌شوند
+   - کلاس‌ها ثابت می‌مانند، فقط مقادیر عوض می‌شود
+   ================================================ */
+:root.dark {
+  color-scheme: dark;
+
+  /* پس‌زمینه‌ها در دارک مود */
+  --color-base: #101B16;
+  --color-base-soft: #141F19;
+  --color-base-strong: #1C2B22;
+
+  /* متن‌ها در دارک مود */
+  --color-text: #F4F2EE;
+  --color-text-muted: #CAC6BA;
+  --color-text-soft: #9E9887;
+
+  /* primary در دارک مود (قوی‌تر و روشن‌تر نسبت به بک‌گراند) */
+  --color-primary: #76C893;
+  --color-primary-hover: #52B69A;
+  --color-primary-strong: #168AAD;
+
+  /* secondary در دارک مود */
+  --color-secondary: #D9ED92;
+  --color-secondary-hover: #B5E48C;
+  --color-secondary-strong: #99D98C;
+
+  /* نئوترال‌ها در دارک مود (برای بُردرها) */
+  --color-neutral: #223127;
+  --color-neutral-strong: #314337;
+  --color-neutral-border: #3A4A40;
+}
+
+
+/* ================================================
+   3) BASE STYLES (MINIMAL)
+   - تنظیمات پایه‌ی body
+   - اینجا فقط از توکن‌ها استفاده می‌کنیم
+   ================================================ */
+@layer base {
+  body {
+    /* پس‌زمینه‌ی کل صفحه */
+    background-color: var(--color-base);
+    /* رنگ متن پیش‌فرض */
+    color: var(--color-text);
+    font-family: system-ui, sans-serif;
+    direction: rtl;
+  }
+
+  
+}
+
+  /* Scrollbar Webkit */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-base);
+    border-radius: 6px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #666;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: var(--color-primary);
+  }
+
+  /* Firefox Scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-text) var(--color-base-soft);
+  }
+
+  /* Focus styles (برای کیبورد) */
+  *:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+/* ================================================
+   4) COMPONENTS (USING PRIMARY/SECONDARY/BASE)
+   - چند کامپوننت پایه:
+       .btn           → دکمه‌ی primary
+       .btn-secondary → دکمه‌ی secondary
+       .card          → کارت ساده
+       .input         → فیلد ورودی
+   - هدف: مثال ساده برای استفاده از توکن‌ها
+   ================================================ */
+
+
+
+/* ================================================
+   5) UTILITIES — CLEAN, SHORT, SEMANTIC
+   - کلاس‌های utility کم‌تعداد و خوانا
+   - برای زمانی که نمی‌خواهی کامپوننت بسازی و 
+     می‌خواهی سریع از توکن‌ها استفاده کنی.
+   ================================================ */
+@layer utilities {
+
+  /* 
+    Base Surface Utilities
+    - استفاده برای بک‌گراندها:
+        <section class="bg-base">      … صفحه اصلی …
+        <div class="bg-base-soft">     … باکس …
+        <div class="bg-base-strong">   … کارت برجسته …
+  */
+  .bg-base {
+    background-color: var(--color-base);
+  }
+
+  .bg-base-soft {
+    background-color: var(--color-base-soft);
+  }
+
+  .bg-base-strong {
+    background-color: var(--color-base-strong);
+  }
+
+  /*
+    Text Utilities
+    - استفاده:
+        <p class="text-main">متن اصلی</p>
+        <p class="text-muted">متن توضیحی</p>
+  */
+  .text-main {
+    color: var(--color-text);
+  }
+
+  .text-muted {
+    color: var(--color-text-muted);
+  }
+
+  /*
+    Border Utilities
+    - استفاده:
+        <div class="border border-neutral">باکس با بُردر کم‌رنگ</div>
+        <hr class="border-t border-neutral-strong" />
+  */
+  .border-neutral {
+    border-color: var(--color-neutral);
+  }
+
+  .border-neutral-strong {
+    border-color: var(--color-neutral-strong);
+  }
+
+  /*
+    Primary Background Utilities
+    - استفاده برای پس‌زمینه‌های مبتنی بر رنگ اصلی:
+        <div class="bg-primary text-[color:var(--color-text-on-primary)]">
+        <span class="bg-primary-hover">Hover state test</span>
+  */
+  .bg-primary {
+    background-color: var(--color-primary);
+  }
+
+  .bg-primary-hover {
+    background-color: var(--color-primary-hover);
+  }
+
+  /*
+    Secondary Background Utilities
+    - استفاده برای رنگ‌های برند ثانویه:
+        <div class="bg-secondary">...</div>
+  */
+  .bg-secondary {
+    background-color: var(--color-secondary);
+  }
+
+  .bg-secondary-hover {
+    background-color: var(--color-secondary-hover);
+  }
+
+  /*
+    Status Utilities
+    - استفاده در badge، tag، alert:
+        <span class="bg-success text-white px-2 rounded">موفق</span>
+        <span class="bg-warning text-black px-2 rounded">هشدار</span>
+        <span class="bg-danger  text-white px-2 rounded">خطا</span>
+  */
+  .bg-success {
+    background-color: var(--color-success);
+  }
+
+  .bg-warning {
+    background-color: var(--color-warning);
+  }
+
+  .bg-danger {
+    background-color: var(--color-danger);
+  }
+}

@@ -31,14 +31,14 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, classNam
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  useEffect(() => {
-    const root = document.documentElement;
-    Object.entries(colors).forEach(([k, v]) => root.style.setProperty(`--color-${k}`, v));
-    Object.entries(spacing).forEach(([k, v]) => root.style.setProperty(`--spacing-${k}`, v));
-    Object.entries(radii).forEach(([k, v]) => root.style.setProperty(`--radius-${k}`, v));
-    Object.entries(shadows).forEach(([k, v]) => root.style.setProperty(`--shadow-${k}`, v));
-    Object.entries(fontSizes).forEach(([k, v]) => root.style.setProperty(`--font-size-${k}`, v));
-  }, []);
+  // useEffect(() => {
+  //   const root = document.documentElement;
+  //   Object.entries(colors).forEach(([k, v]) => root.style.setProperty(`--color-${k}`, v));
+  //   Object.entries(spacing).forEach(([k, v]) => root.style.setProperty(`--spacing-${k}`, v));
+  //   Object.entries(radii).forEach(([k, v]) => root.style.setProperty(`--radius-${k}`, v));
+  //   Object.entries(shadows).forEach(([k, v]) => root.style.setProperty(`--shadow-${k}`, v));
+  //   Object.entries(fontSizes).forEach(([k, v]) => root.style.setProperty(`--font-size-${k}`, v));
+  // }, []);
 
   const toggleTheme = () => setTheme((t) => (t === 'light' ? 'dark' : 'light'));
 

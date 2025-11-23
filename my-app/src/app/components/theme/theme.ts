@@ -1,10 +1,10 @@
 export const colors = {
-  primary: '#1d4ed8',
-  secondary: '#9333ea',
-  danger: '#dc2626',
-  success: '#16a34a',
-  warning: '#ca8a04',
-  gray: '#6b7280',
+  // primary: '#1d4ed8',
+  // secondary: '#9333ea',
+  // danger: '#dc2626',
+  // success: '#16a34a',
+  // warning: '#ca8a04',
+  // gray: '#6b7280',
 };
 
 export const spacing = {

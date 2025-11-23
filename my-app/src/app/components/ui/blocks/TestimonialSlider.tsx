@@ -18,7 +18,7 @@ export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonia
   const prev = () => setIndex((i) => (i - 1 + testimonials.length) % testimonials.length);
 
   return (
-    <div className={clsx('relative', className)}>
+    <div className={clsx('relative border border-neutral rounded-md', className)}>
       <AnimatePresence mode="wait">
         <motion.div
           key={index}
@@ -26,10 +26,10 @@ export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ testimonia
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.3 }}
-          className="text-center p-6 bg-white dark:bg-gray-800 rounded shadow"
+          className="text-center p-6 bg-base-soft rounded shadow"
         >
-          <p className="mb-2 text-gray-600 dark:text-gray-300">"{testimonials[index].quote}"</p>
-          <p className="font-semibold dark:text-white">- {testimonials[index].name}</p>
+          <p className="mb-2 ">"{testimonials[index].quote}"</p>
+          <p className="font-semibold ">- {testimonials[index].name}</p>
         </motion.div>
       </AnimatePresence>
       {testimonials.length > 1 && (

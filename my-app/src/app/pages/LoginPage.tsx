@@ -4,7 +4,7 @@ import { PageTemplate } from '@/app/layouts';
 import { LoginForm } from '@/app/components/ui/forms/LoginForm';
 import { Button } from '@/app/components/ui/Button';
 
-export const LoginPage: React.FC = () => {
+export const LoginPage: React.FC = () => {``
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = () => {

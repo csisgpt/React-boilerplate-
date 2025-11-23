@@ -5,11 +5,13 @@ import { AppRoutes } from './routes';
 import { HelmetProvider } from 'react-helmet-async';
 
 const App: React.FC = () => (
-  <BrowserRouter>
-    <GlobalProviders>
-      <AppRoutes />
-    </GlobalProviders>
-  </BrowserRouter>
+  <HelmetProvider >
+    <BrowserRouter>
+      <GlobalProviders>
+        <AppRoutes />
+      </GlobalProviders>
+    </BrowserRouter>
+  </HelmetProvider>
 );
 
 export default App;

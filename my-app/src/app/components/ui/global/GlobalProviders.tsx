@@ -1,5 +1,5 @@
+// GlobalProviders.tsx
 import React from 'react';
-import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from '@app/components/theme';
 import { ErrorBoundaryWrapper } from '@app/components/interaction';
 import { FeatureFlagProvider } from './FeatureFlagProvider';
@@ -45,22 +45,20 @@ const I18nProvider: React.FC<I18nProviderProps> = ({ children }) => {
 
 export interface Props { children: React.ReactNode }
 
-/** Compose application wide providers */
+/** Compose application wide providers (without HelmetProvider) */
 export const GlobalProviders: React.FC<Props> = ({ children }) => (
-  <HelmetProvider >
-    <FeatureFlagProvider>
-      <AuthProvider>
-        <I18nProvider>
-          <ThemeProvider>
-            <AnalyticsProvider>
-              <ErrorBoundaryWrapper>
-                <GlobalStyles />
-                {children}
-              </ErrorBoundaryWrapper>
-            </AnalyticsProvider>
-          </ThemeProvider>
-        </I18nProvider>
-      </AuthProvider>
-    </FeatureFlagProvider>
-  </HelmetProvider>
+  <FeatureFlagProvider>
+    <AuthProvider>
+      <I18nProvider>
+        <ThemeProvider>
+          <AnalyticsProvider>
+            <ErrorBoundaryWrapper>
+              {/* <GlobalStyles /> */}
+              {children}
+            </ErrorBoundaryWrapper>
+          </AnalyticsProvider>
+        </ThemeProvider>
+      </I18nProvider>
+    </AuthProvider>
+  </FeatureFlagProvider>
 );
